@@ -16,31 +16,7 @@ This project addresses the challenge of fine-grained classification with limited
 
 ## Model Architecture
 
-```mermaid
-flowchart LR
-    subgraph Init["Initialization"]
-        L[(Labeled Data)]
-        L --> S0[Swin-B V0]
-        L --> V0[ViT V0]
-    end
-
-    subgraph CoTeach["Model Co-teaching Loop"]
-        S0 --> S1[Swin-B V1]
-        V0 --> V1[ViT V1]
-
-        U[(Unlabeled Data)]
-        S1 & V1 -->|Inference| P0[(Pseudo Labels)]
-
-        P0 --> M0[(Merged Data)]
-        L2[(Labeled Data)] --> M0
-
-        M0 --> S2[Swin-B V2]
-        M0 --> V2[ViT V2]
-
-        S2 -.->|Repeat| S1
-        V2 -.->|Repeat| V1
-    end
-```
+![Model Training Pipeline](assets/pipeline.png)
 
 ### Training Pipeline
 
@@ -52,7 +28,7 @@ flowchart LR
 ## Installation
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/fine-grained-ssl.git
+git clone https://github.com/yikedabaicaimuuuu/fine-grained-ssl.git
 cd fine-grained-ssl
 pip install -r requirements.txt
 ```
@@ -87,6 +63,8 @@ python train.py \
 
 ```
 fine-grained-ssl/
+├── assets/
+│   └── pipeline.png    # Training pipeline diagram
 ├── src/
 │   ├── __init__.py
 │   ├── dataset.py      # Custom dataset class
